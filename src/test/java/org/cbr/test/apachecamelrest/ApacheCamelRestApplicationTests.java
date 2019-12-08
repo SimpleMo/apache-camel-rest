@@ -1,4 +1,4 @@
-package org.cbr.test.apachcamelrest;
+package org.cbr.test.apachecamelrest;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
