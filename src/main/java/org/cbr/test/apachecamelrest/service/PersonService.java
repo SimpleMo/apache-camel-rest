@@ -1,6 +1,7 @@
 package org.cbr.test.apachecamelrest.service;
 
 import org.cbr.test.apachecamelrest.model.Person;
+import org.cbr.test.apachecamelrest.repository.PersonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
@@ -16,6 +17,9 @@ public class PersonService {
     @Autowired
     private List<Person> persons;
 
+    @Autowired
+    private PersonRepository personRepository;
+
     protected void addPersons(){
         persons.add((new Person()).setId(1).setName("Иван"));
         persons.add((new Person()).setId(2).setName("Пётр"));
@@ -29,12 +33,12 @@ public class PersonService {
         if(id == null){
             return null;
         }
-        Optional<Person> found = persons.stream().filter(person -> id.equals(person.getId())).findFirst();
-        return found.orElse(null);
+        Optional<Person> result = personRepository.findById(id);
+        return result.orElse(null);
     }
 
     public void addPerson(Person person){
-        persons.add(person);
+        personRepository.save(person);
     }
 
     public void deletePerson(Integer id){
@@ -42,7 +46,7 @@ public class PersonService {
         if(person == null){
             return;
         }
-        persons.remove(person);
+        personRepository.delete(person);
     }
 
 }
