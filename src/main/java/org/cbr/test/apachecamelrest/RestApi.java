@@ -64,6 +64,14 @@ public class RestApi extends RouteBuilder {
                 .route()
                 .routeId("person-delete")
                 .bean(PersonService.class, "deletePerson(${header.id})")
+                .endRest()
+            .post("/person/to-file")
+                .description("Сохраняет json  в файл")
+                .consumes(MediaType.APPLICATION_JSON)
+                .type(Person.class)
+                .route()
+                .routeId("person-to-file")
+                .to("file://work?fileName=data_${date:now:ddMMyy_hhmm}.json")
                 .endRest();
 
         from("direct:remoteService")
@@ -74,5 +82,6 @@ public class RestApi extends RouteBuilder {
                 .transform()
                 .simple("Hello ${in.body.name}")
                 .setHeader(Exchange.HTTP_RESPONSE_CODE, constant(200));
+        //TODO добавить маршрут с to - запись в файл
     }
 }

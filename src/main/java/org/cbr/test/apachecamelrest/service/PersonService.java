@@ -20,13 +20,14 @@ public class PersonService {
     @Autowired
     private PersonRepository personRepository;
 
-    protected void addPersons(){
-        persons.add((new Person()).setId(1).setName("Иван"));
-        persons.add((new Person()).setId(2).setName("Пётр"));
+    @PostConstruct
+    protected void addToRepository(){
+        personRepository.save((new Person()).setId(1).setFirstname("Иван").setLastname("Иванов").setEmail("ivanov@mail.ru").setMobilePhone("912-123-45-67").setWorkPhone("912-765-43-21"));
+        personRepository.save((new Person()).setId(2).setFirstname("Пётр").setLastname("Петров").setEmail("petrov@mail.ru").setMobilePhone("912-789-10-11").setWorkPhone("912-111-09-87"));
     }
 
     public Iterable<Person> findPersons(){
-        return persons;
+        return personRepository.findAll();
     }
 
     public Person find(Integer id){

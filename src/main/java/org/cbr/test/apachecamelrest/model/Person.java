@@ -37,40 +37,45 @@ public class Person {
         return firstname;
     }
 
-    public void setFirstname(String firstname) {
+    public Person setFirstname(String firstname) {
         this.firstname = firstname;
+        return this;
     }
 
     public String getLastname() {
         return lastname;
     }
 
-    public void setLastname(String lastname) {
+    public Person setLastname(String lastname) {
         this.lastname = lastname;
+        return this;
     }
 
     public String getWorkPhone() {
         return workphone;
     }
 
-    public void setWorkPhone(String workphone) {
+    public Person setWorkPhone(String workphone) {
         this.workphone = workphone;
+        return this;
     }
 
     public String getMobilePhone() {
         return mobilephone;
     }
 
-    public void setMobilephone(String mobilephone) {
+    public Person setMobilePhone(String mobilephone) {
         this.mobilephone = mobilephone;
+        return this;
     }
 
     public String getEmail() {
         return email;
     }
 
-    public void setEmail(String email) {
+    public Person setEmail(String email) {
         this.email = email;
+        return this;
     }
 
     public Person setName(String name) {
