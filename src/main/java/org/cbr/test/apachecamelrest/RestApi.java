@@ -6,7 +6,9 @@ import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.impl.DefaultCamelContext;
 import org.apache.camel.model.rest.RestBindingMode;
 import org.cbr.test.apachecamelrest.model.Person;
+import org.cbr.test.apachecamelrest.model.Workplace;
 import org.cbr.test.apachecamelrest.service.PersonService;
+import org.cbr.test.apachecamelrest.service.WorkplaceService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -64,6 +66,31 @@ public class RestApi extends RouteBuilder {
                 .route()
                 .routeId("person-delete")
                 .bean(PersonService.class, "deletePerson(${header.id})")
+                .endRest()
+            .get("/workplace")
+                .description("Возвращает список мест работы")
+                .route()
+                .routeId("workplaces-get")
+                .bean(WorkplaceService.class, "getWorkplaces")
+                .endRest()
+            .get("/workplace/{id}")
+                .description("Возвращает место работы")
+                .route()
+                .routeId("workplace-get")
+                .bean(WorkplaceService.class, "getWorkplace(${header.id})")
+                .endRest()
+            .post("/workplace")
+                .description("Добавляет место работы")
+                .type(Workplace.class)
+                .route()
+                .routeId("workplace-post")
+                .bean(WorkplaceService.class, "addWorkplace(${body})")
+                .endRest()
+            .delete("/workplace/{id}")
+                .description("Удаляет место работы")
+                .route()
+                .routeId("workplace-вудуеу")
+                .bean(WorkplaceService.class, "deleteWorkplace(${header.id})")
                 .endRest()
             .post("/person/to-file")
                 .description("Сохраняет json  в файл")
