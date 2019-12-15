@@ -4,4 +4,5 @@ import org.cbr.test.apachecamelrest.model.Workplace;
 import org.springframework.data.repository.CrudRepository;
 
 public interface WorkplaceRepository extends CrudRepository<Workplace, Integer> {
+    Workplace findByLastNameAndFirstName(String lastName, String firstName);
 }

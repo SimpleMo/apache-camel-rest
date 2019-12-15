@@ -14,27 +14,20 @@ import java.io.IOException;
 import java.io.InputStream;
 
 @Component
-public class PersonTypeConverter implements TypeConverters {
+public class PersonTypeConverter extends AbstractConverter<Person> {
 
-    @Autowired
-    private ObjectMapper mapper;
+    @Override
+    protected Class<Person> getClazz() {
+        return Person.class;
+    }
 
     @Converter
     public InputStream personToByteArray(Person person){
-        try {
-            byte[] bytes = mapper.writeValueAsBytes(person);
-            return new ByteArrayInputStream(bytes);
-        } catch (JsonProcessingException e) {
-            throw new RuntimeException(e);
-        }
+        return toInputStream(person);
     }
 
     @Converter
     public Person byteArrayToPerson(byte[] source){
-        try {
-            return mapper.readValue(source, Person.class);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        return toPOJO(source);
     }
 }

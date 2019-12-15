@@ -17,12 +17,6 @@ public class WorkplaceService {
     @Autowired
     private WorkplaceRepository workplaceRepository;
 
-    @PostConstruct
-    protected void addToRepository() {
-        workplaceRepository.save((new Workplace()).setFirstName("Иван").setLastName("Иванов").setWorkPlace("ООО Одуванчик").setWorkPlace("ул. Ленина"));
-        workplaceRepository.save((new Workplace()).setFirstName("Пётр").setLastName("Петров").setWorkPlace("ООО Василёк").setWorkPlace("ул. Компрос"));
-    }
-
     public Iterable<Workplace> getWorkplaces() {
         return workplaceRepository.findAll();
     }
@@ -42,5 +36,9 @@ public class WorkplaceService {
             return;
         }
         workplaceRepository.delete(byId.get());
+    }
+
+    public Workplace findByLastNameAndFirstName(String lastName, String firstName){
+        return workplaceRepository.findByLastNameAndFirstName(lastName, firstName);
     }
 }
