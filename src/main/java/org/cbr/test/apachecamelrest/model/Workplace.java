@@ -4,6 +4,7 @@ import javax.persistence.*;
 
 @Entity
 public class Workplace {
+    //Места работы. Это заполняем и просматриваем с формы
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;

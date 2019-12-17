@@ -5,6 +5,7 @@ import java.util.Objects;
 
 @Entity
 public class Person {
+    //Абоненты телефоенной книги
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;

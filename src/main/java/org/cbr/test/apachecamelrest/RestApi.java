@@ -75,7 +75,7 @@ public class RestApi extends RouteBuilder {
                 .routeId("person-get")
                 .bean(PersonService.class, "find(${header.id})")
                 .endRest()
-            .post("/person")
+            .post("/person")//todo добавить валидацию
                 .description("Добавляет переданный объект")
                 .type(Person.class)
                 .route()
@@ -87,7 +87,7 @@ public class RestApi extends RouteBuilder {
                 .routeId("person-delete")
                 .bean(PersonService.class, "deletePerson(${header.id})")
                 .endRest()
-            .get("/workplace")
+            .get("/workplace")//Вот это - телеф
                 .description("Возвращает список мест работы")
                 .route()
                 .routeId("workplaces-get")
@@ -148,6 +148,7 @@ public class RestApi extends RouteBuilder {
                 .to("file://work?fileName=${header.filename}&doneFileName=${file:name}.ready")
                 .endRest();
 
+        //EXEC
         from("file://work?doneFileName=${file:name}.ready&delete=true&initialDelay=60s&delay=5s")
                 .routeId("person-from-file")
                 .process(new Processor() {

@@ -5,6 +5,7 @@ import javax.persistence.Entity;
 
 @Entity
 public class PersonWithWorkplace extends Person {
+    //Справочник Телефонная книга
 
     @Column(name = "WORK")
     private String work;
