@@ -85,7 +85,15 @@ public class RestApi extends RouteBuilder {
                     @Override
                     public boolean matches(Exchange exchange) {
                         Person body = exchange.getIn().getBody(Person.class);
-                        return ;
+                        boolean mobilePhoneFormat = body.getMobilePhone().matches("^([1-9]\\d{2})-(\\d{3})-(\\d{2})-(\\d{2})$");
+                        boolean workPhoneFormat = body.getWorkPhone().matches("^([1-9]\\d{2})-(\\d{3})-(\\d{2})-(\\d{2})$");
+                        if (!mobilePhoneFormat || !workPhoneFormat){
+                            return false;
+                        }
+
+                        String[] mobilePhoneParts = body.getMobilePhone().split("-");
+                        String[] workPhoneParts = body.getWorkPhone().split("-");
+                        return mobilePhoneParts[0].equals(workPhoneParts[0]);
                     }
                 })
                 .bean(PersonService.class, "addPerson(${body})")
@@ -126,16 +134,24 @@ public class RestApi extends RouteBuilder {
                 .type(Person.class)
                 .route()
                 .routeId("person-to-file")
-                //.to("file://prepare?fileName=data_${date:now:ddMMyy_hhmm}.json")
-                .process(new Processor() {
-                    @Override
-                    public void process(Exchange exchange) throws Exception {
-                        Person body = exchange.getIn().getBody(Person.class);
-                        ToFileDto toFileDto = new ToFileDto();
-                        toFileDto.setPerson(body);
-                        toFileDto.setFileName("data_" + sdf.format(new Date()) + ".json");
-                        exchange.getIn().setBody(toFileDto, ToFileDto.class);
+                .validate(exchange -> {
+                    Person body = exchange.getIn().getBody(Person.class);
+                    boolean mobilePhoneFormat = body.getMobilePhone().matches("^([1-9]\\d{2})-(\\d{3})-(\\d{2})-(\\d{2})$");
+                    boolean workPhoneFormat = body.getWorkPhone().matches("^([1-9]\\d{2})-(\\d{3})-(\\d{2})-(\\d{2})$");
+                    if (!mobilePhoneFormat || !workPhoneFormat){
+                        return false;
                     }
+
+                    String[] mobilePhoneParts = body.getMobilePhone().split("-");
+                    String[] workPhoneParts = body.getWorkPhone().split("-");
+                    return mobilePhoneParts[0].equals(workPhoneParts[0]);
+                })
+                .process(exchange -> {
+                    Person body = exchange.getIn().getBody(Person.class);
+                    ToFileDto toFileDto = new ToFileDto();
+                    toFileDto.setPerson(body);
+                    toFileDto.setFileName("data_" + sdf.format(new Date()) + ".json");
+                    exchange.getIn().setBody(toFileDto, ToFileDto.class);
                 })
                 .to("file://prepare?fileName=${body.fileName}")
                 .endRest()
