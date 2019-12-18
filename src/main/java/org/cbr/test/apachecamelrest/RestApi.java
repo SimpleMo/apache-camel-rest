@@ -81,20 +81,17 @@ public class RestApi extends RouteBuilder {
                 .type(Person.class)
                 .route()
                 .routeId("person-post")
-                .validate(new Predicate() {
-                    @Override
-                    public boolean matches(Exchange exchange) {
-                        Person body = exchange.getIn().getBody(Person.class);
-                        boolean mobilePhoneFormat = body.getMobilePhone().matches("^([1-9]\\d{2})-(\\d{3})-(\\d{2})-(\\d{2})$");
-                        boolean workPhoneFormat = body.getWorkPhone().matches("^([1-9]\\d{2})-(\\d{3})-(\\d{2})-(\\d{2})$");
-                        if (!mobilePhoneFormat || !workPhoneFormat){
-                            return false;
-                        }
-
-                        String[] mobilePhoneParts = body.getMobilePhone().split("-");
-                        String[] workPhoneParts = body.getWorkPhone().split("-");
-                        return mobilePhoneParts[0].equals(workPhoneParts[0]);
+                .validate(exchange -> {
+                    Person body = exchange.getIn().getBody(Person.class);
+                    boolean mobilePhoneFormat = body.getMobilePhone().matches("^([1-9]\\d{2})-(\\d{3})-(\\d{2})-(\\d{2})$");
+                    boolean workPhoneFormat = body.getWorkPhone().matches("^([1-9]\\d{2})-(\\d{3})-(\\d{2})-(\\d{2})$");
+                    if (!mobilePhoneFormat || !workPhoneFormat){
+                        return false;
                     }
+
+                    String[] mobilePhoneParts = body.getMobilePhone().split("-");
+                    String[] workPhoneParts = body.getWorkPhone().split("-");
+                    return mobilePhoneParts[0].equals(workPhoneParts[0]);
                 })
                 .bean(PersonService.class, "addPerson(${body})")
                 .endRest()
@@ -160,14 +157,11 @@ public class RestApi extends RouteBuilder {
                 .type(String.class)
                 .route()
                 .routeId("to-work-dir")
-                .process(new Processor() {
-                    @Override
-                    public void process(Exchange exchange) throws Exception {
-                        String fileName = exchange.getIn().getBody(String.class);
-                        File file = new File("./prepare/" + fileName);
-                        exchange.getIn().setHeader("filename", file.getName());
-                        exchange.getIn().setBody(file, File.class);
-                    }
+                .process(exchange -> {
+                    String fileName = exchange.getIn().getBody(String.class);
+                    File file = new File("./prepare/" + fileName);
+                    exchange.getIn().setHeader("filename", file.getName());
+                    exchange.getIn().setBody(file, File.class);
                 })
                 .to("file://work?fileName=${header.filename}&doneFileName=${file:name}.ready")
                 .endRest();
@@ -175,16 +169,13 @@ public class RestApi extends RouteBuilder {
         //EXEC
         from("file://work?doneFileName=${file:name}.ready&delete=true&initialDelay=60s&delay=5s")
                 .routeId("person-from-file")
-                .process(new Processor() {
-                    @Override
-                    public void process(Exchange exchange) throws Exception {
-                        File camelFilePath = new File(exchange.getIn().getHeaders().get("CamelFilePath").toString());
-                        Person person = mapper.readValue(camelFilePath, Person.class);
-                        Workplace workplace = workplaceService.findByLastNameAndFirstName(person.getLastname(), person.getFirstname());
-                        PersonWithWorkplace newBody = PersonWithWorkplace.fromPersonAndWorkPlace(person, workplace);
-                        personWithWorkplaceRepository.save(newBody);
-                        exchange.getIn().setBody(newBody, PersonWithWorkplace.class);
-                    }
+                .process(exchange -> {
+                    File camelFilePath = new File(exchange.getIn().getHeaders().get("CamelFilePath").toString());
+                    Person person = mapper.readValue(camelFilePath, Person.class);
+                    Workplace workplace = workplaceService.findByLastNameAndFirstName(person.getLastname(), person.getFirstname());
+                    PersonWithWorkplace newBody = PersonWithWorkplace.fromPersonAndWorkPlace(person, workplace);
+                    personWithWorkplaceRepository.save(newBody);
+                    exchange.getIn().setBody(newBody, PersonWithWorkplace.class);
                 })
                 .to("file://data?fileName=${file:name}");
 
