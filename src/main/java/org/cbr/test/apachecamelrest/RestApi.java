@@ -3,6 +3,7 @@ package org.cbr.test.apachecamelrest;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.camel.CamelContext;
 import org.apache.camel.Exchange;
+import org.apache.camel.Predicate;
 import org.apache.camel.Processor;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.impl.DefaultCamelContext;
@@ -80,6 +81,13 @@ public class RestApi extends RouteBuilder {
                 .type(Person.class)
                 .route()
                 .routeId("person-post")
+                .validate(new Predicate() {
+                    @Override
+                    public boolean matches(Exchange exchange) {
+                        Person body = exchange.getIn().getBody(Person.class);
+                        return ;
+                    }
+                })
                 .bean(PersonService.class, "addPerson(${body})")
                 .endRest()
             .delete("/person/{id}")

@@ -3,9 +3,11 @@ package org.cbr.test.apachecamelrest.model;
 import javax.persistence.*;
 import java.util.Objects;
 
+/**
+ * Абоненты телефоенной книги. Это получаем со фронта и обрабатываем в виде файла
+ */
 @Entity
 public class Person {
-    //Абоненты телефоенной книги
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;

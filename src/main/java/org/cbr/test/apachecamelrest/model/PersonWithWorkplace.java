@@ -1,15 +1,19 @@
 package org.cbr.test.apachecamelrest.model;
 
+import org.springframework.lang.NonNull;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 
+/**
+ * Справочник Телефонная книга, его на фронте только просматриваем
+ */
 @Entity
 public class PersonWithWorkplace extends Person {
-    //Справочник Телефонная книга
-
     @Column(name = "WORK")
     private String work;
 
+    @NonNull
     public String getWork() {
         return work;
     }

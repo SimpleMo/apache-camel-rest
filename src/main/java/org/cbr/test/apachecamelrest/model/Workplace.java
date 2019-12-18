@@ -2,6 +2,9 @@ package org.cbr.test.apachecamelrest.model;
 
 import javax.persistence.*;
 
+/**
+ * Справочник места работы. Это заполняем и просматриваем с формы
+ */
 @Entity
 public class Workplace {
     //Места работы. Это заполняем и просматриваем с формы
