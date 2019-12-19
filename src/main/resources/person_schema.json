@@ -1,0 +1,76 @@
+{
+  "$id": "http://example.com/root.json",
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "definitions": {},
+  "properties": {
+    "email": {
+      "$id": "#/properties/email",
+      "default": "",
+      "examples": [
+        "ivanov@mail.ru"
+      ],
+      "pattern": "^(.*)$",
+      "title": "The Email Schema",
+      "type": "string"
+    },
+    "firstname": {
+      "$id": "#/properties/firstname",
+      "default": "",
+      "examples": [
+        "Иван"
+      ],
+      "pattern": "^(.*)$",
+      "title": "The Firstname Schema",
+      "type": "string"
+    },
+    "id": {
+      "$id": "#/properties/id",
+      "default": 0,
+      "examples": [
+        1
+      ],
+      "title": "The Id Schema",
+      "type": "integer"
+    },
+    "lastname": {
+      "$id": "#/properties/lastname",
+      "default": "",
+      "examples": [
+        "Иванов"
+      ],
+      "pattern": "^(.*)$",
+      "title": "The Lastname Schema",
+      "type": "string"
+    },
+    "mobilePhone": {
+      "$id": "#/properties/mobilePhone",
+      "default": "",
+      "examples": [
+        "912-123-45-67"
+      ],
+      "pattern": "^(.*)$",
+      "title": "The Mobilephone Schema",
+      "type": "string"
+    },
+    "workPhone": {
+      "$id": "#/properties/workPhone",
+      "default": "",
+      "examples": [
+        "912-765-43-21"
+      ],
+      "pattern": "^(.*)$",
+      "title": "The Workphone Schema",
+      "type": "string"
+    }
+  },
+  "required": [
+    "id",
+    "firstname",
+    "lastname",
+    "email",
+    "mobilePhone",
+    "workPhone"
+  ],
+  "title": "The Root Schema",
+  "type": "object"
+}

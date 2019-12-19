@@ -169,6 +169,7 @@ public class RestApi extends RouteBuilder {
         //EXEC
         from("file://work?doneFileName=${file:name}.ready&delete=true&initialDelay=60s&delay=5s")
                 .routeId("person-from-file")
+                .to("json-validator:person_schema.json")
                 .process(exchange -> {
                     File camelFilePath = new File(exchange.getIn().getHeaders().get("CamelFilePath").toString());
                     Person person = mapper.readValue(camelFilePath, Person.class);
@@ -178,11 +179,6 @@ public class RestApi extends RouteBuilder {
                     exchange.getIn().setBody(newBody, PersonWithWorkplace.class);
                 })
                 .to("file://data?fileName=${file:name}");
-
-        /*from("direct:toWorkDir")
-                .routeId("direct-to-work-dir")
-                .from("file://prepare?delete=true")
-                .to("file://work?fileName=${file:name}.txt&doneFileName=${file:name}.ready");*/
 
         from("direct:remoteService")
                 .routeId("direct-route")
