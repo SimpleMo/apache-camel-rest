@@ -13,7 +13,7 @@
       "title": "The Email Schema",
       "type": "string"
     },
-    "firstname": {
+    "firstName": {
       "$id": "#/properties/firstname",
       "default": "",
       "examples": [
@@ -32,7 +32,7 @@
       "title": "The Id Schema",
       "type": "integer"
     },
-    "lastname": {
+    "lastName": {
       "$id": "#/properties/lastname",
       "default": "",
       "examples": [

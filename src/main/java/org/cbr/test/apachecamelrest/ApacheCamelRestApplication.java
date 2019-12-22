@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.servlet.ServletRegistrationBean;
-import org.springframework.context.annotation.Bean;
 
 import javax.annotation.PostConstruct;
 
@@ -27,8 +26,8 @@ public class ApacheCamelRestApplication {
 
 	@PostConstruct
 	public void addData(){
-		personRepository.save((new Person()).setId(1).setFirstname("Иван").setLastname("Иванов").setEmail("ivanov@mail.ru").setMobilePhone("912-123-45-67").setWorkPhone("912-765-43-21"));
-		personRepository.save((new Person()).setId(2).setFirstname("Пётр").setLastname("Петров").setEmail("petrov@mail.ru").setMobilePhone("912-789-10-11").setWorkPhone("912-111-09-87"));
+		personRepository.save((new Person()).setId(1).setFirstName("Иван").setLastName("Иванов").setEmail("ivanov@mail.ru").setMobilePhone("912-123-45-67").setWorkPhone("912-765-43-21"));
+		personRepository.save((new Person()).setId(2).setFirstName("Пётр").setLastName("Петров").setEmail("petrov@mail.ru").setMobilePhone("912-789-10-11").setWorkPhone("912-111-09-87"));
 
 		workplaceRepository.save((new Workplace()).setId(1).setFirstName("Иван").setLastName("Иванов").setWorkPlace("ООО Одуванчик").setAddress("ул. Ленина"));
 		workplaceRepository.save((new Workplace()).setId(2).setFirstName("Пётр").setLastName("Петров").setWorkPlace("ООО Василёк").setAddress("ул. Компрос"));

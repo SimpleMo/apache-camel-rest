@@ -25,8 +25,8 @@ public class PersonWithWorkplace extends Person {
     public static PersonWithWorkplace fromPersonAndWorkPlace(Person person, Workplace workplace){
         PersonWithWorkplace result = new PersonWithWorkplace();
         result.setId(person.getId());
-        result.setFirstname(person.getFirstname());
-        result.setLastname(person.getLastname());
+        result.setFirstName(person.getFirstName());
+        result.setLastName(person.getLastName());
         result.setEmail(person.getEmail());
         result.setWorkPhone(person.getWorkPhone());
         result.setMobilePhone(person.getMobilePhone());

@@ -3,8 +3,6 @@ package org.cbr.test.apachecamelrest;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.camel.CamelContext;
 import org.apache.camel.Exchange;
-import org.apache.camel.Predicate;
-import org.apache.camel.Processor;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.impl.DefaultCamelContext;
 import org.apache.camel.model.rest.RestBindingMode;
@@ -164,6 +162,18 @@ public class RestApi extends RouteBuilder {
                     exchange.getIn().setBody(file, File.class);
                 })
                 .to("file://work?fileName=${header.filename}&doneFileName=${file:name}.ready")
+                .endRest()
+            .post("/person/clear-file")
+                .description("Удаляет созданный файл из папки prepare")
+                .type(String.class)
+                .route()
+                .routeId("clear-file")
+                .process(exchange -> {
+                    String fileName = exchange.getIn().getBody(String.class);
+                    File file = new File("./prepare/" + fileName);
+                    file.delete();
+                })
+                .to("mock:end")
                 .endRest();
 
         //EXEC
@@ -173,7 +183,7 @@ public class RestApi extends RouteBuilder {
                 .process(exchange -> {
                     File camelFilePath = new File(exchange.getIn().getHeaders().get("CamelFilePath").toString());
                     Person person = mapper.readValue(camelFilePath, Person.class);
-                    Workplace workplace = workplaceService.findByLastNameAndFirstName(person.getLastname(), person.getFirstname());
+                    Workplace workplace = workplaceService.findByLastNameAndFirstName(person.getLastName(), person.getFirstName());
                     PersonWithWorkplace newBody = PersonWithWorkplace.fromPersonAndWorkPlace(person, workplace);
                     personWithWorkplaceRepository.save(newBody);
                     exchange.getIn().setBody(newBody, PersonWithWorkplace.class);

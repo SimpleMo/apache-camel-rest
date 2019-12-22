@@ -13,10 +13,10 @@ public class Person {
     private Integer id;
 
     @Column(name = "FIRST_NAME")
-    private String firstname;
+    private String firstName;
 
     @Column(name = "LAST_NAME")
-    private String lastname;
+    private String lastName;
 
     @Column(name = "WORK_PHONE")
     private String workphone;
@@ -36,21 +36,21 @@ public class Person {
         return this;
     }
 
-    public String getFirstname() {
-        return firstname;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public Person setFirstname(String firstname) {
-        this.firstname = firstname;
+    public Person setFirstName(String firstName) {
+        this.firstName = firstName;
         return this;
     }
 
-    public String getLastname() {
-        return lastname;
+    public String getLastName() {
+        return lastName;
     }
 
-    public Person setLastname(String lastname) {
-        this.lastname = lastname;
+    public Person setLastName(String lastName) {
+        this.lastName = lastName;
         return this;
     }
 
@@ -82,7 +82,7 @@ public class Person {
     }
 
     public Person setName(String name) {
-        this.firstname = name;
+        this.firstName = name;
         return this;
     }
 
@@ -92,8 +92,8 @@ public class Person {
         if (o == null || getClass() != o.getClass()) return false;
         Person person = (Person) o;
         return id.equals(person.id) &&
-                firstname.equals(person.firstname) &&
-                lastname.equals(person.lastname) &&
+                firstName.equals(person.firstName) &&
+                lastName.equals(person.lastName) &&
                 workphone.equals(person.workphone) &&
                 mobilephone.equals(person.mobilephone) &&
                 email.equals(person.email);
@@ -101,6 +101,6 @@ public class Person {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, firstname, lastname, workphone, mobilephone, email);
+        return Objects.hash(id, firstName, lastName, workphone, mobilephone, email);
     }
 }
