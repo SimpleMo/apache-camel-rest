@@ -184,6 +184,9 @@ public class RestApi extends RouteBuilder {
                     File camelFilePath = new File(exchange.getIn().getHeaders().get("CamelFilePath").toString());
                     Person person = mapper.readValue(camelFilePath, Person.class);
                     Workplace workplace = workplaceService.findByLastNameAndFirstName(person.getLastName(), person.getFirstName());
+                    if(workplace == null){
+                        return;
+                    }
                     PersonWithWorkplace newBody = PersonWithWorkplace.fromPersonAndWorkPlace(person, workplace);
                     personWithWorkplaceRepository.save(newBody);
                     exchange.getIn().setBody(newBody, PersonWithWorkplace.class);

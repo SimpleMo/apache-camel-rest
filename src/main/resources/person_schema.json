@@ -3,8 +3,8 @@
   "$schema": "http://json-schema.org/draft-04/schema#",
   "definitions": {},
   "properties": {
-    "email": {
-      "$id": "#/properties/email",
+    "mail": {
+      "$id": "#/properties/mail",
       "default": "",
       "examples": [
         "ivanov@mail.ru"
@@ -22,15 +22,6 @@
       "pattern": "^(.*)$",
       "title": "The Firstname Schema",
       "type": "string"
-    },
-    "id": {
-      "$id": "#/properties/id",
-      "default": 0,
-      "examples": [
-        1
-      ],
-      "title": "The Id Schema",
-      "type": "integer"
     },
     "lastName": {
       "$id": "#/properties/lastname",
@@ -64,10 +55,9 @@
     }
   },
   "required": [
-    "id",
-    "firstname",
-    "lastname",
-    "email",
+    "firstName",
+    "lastName",
+    "mail",
     "mobilePhone",
     "workPhone"
   ],

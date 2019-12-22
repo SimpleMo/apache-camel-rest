@@ -25,7 +25,7 @@ public class Person {
     private String mobilephone;
 
     @Column(name = "EMAIL")
-    private String email;
+    private String mail;
 
     public Integer getId() {
         return id;
@@ -72,12 +72,12 @@ public class Person {
         return this;
     }
 
-    public String getEmail() {
-        return email;
+    public String getMail() {
+        return mail;
     }
 
-    public Person setEmail(String email) {
-        this.email = email;
+    public Person setMail(String mail) {
+        this.mail = mail;
         return this;
     }
 
@@ -96,11 +96,11 @@ public class Person {
                 lastName.equals(person.lastName) &&
                 workphone.equals(person.workphone) &&
                 mobilephone.equals(person.mobilephone) &&
-                email.equals(person.email);
+                mail.equals(person.mail);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, firstName, lastName, workphone, mobilephone, email);
+        return Objects.hash(id, firstName, lastName, workphone, mobilephone, mail);
     }
 }

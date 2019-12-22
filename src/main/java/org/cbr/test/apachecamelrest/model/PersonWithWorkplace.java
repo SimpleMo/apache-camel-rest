@@ -27,7 +27,7 @@ public class PersonWithWorkplace extends Person {
         result.setId(person.getId());
         result.setFirstName(person.getFirstName());
         result.setLastName(person.getLastName());
-        result.setEmail(person.getEmail());
+        result.setMail(person.getMail());
         result.setWorkPhone(person.getWorkPhone());
         result.setMobilePhone(person.getMobilePhone());
         result.setWork(workplace.getWorkPlace() + " " + workplace.getAddress());
